@@ -1,0 +1,41 @@
+#flexbox {
+  width: 80%;
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: black;
+  margin: 0 auto;
+}
+
+#flexbox div {
+  margin: 0 auto;
+  width: 30%;
+  height: 30%;
+  border-radius: 100px;
+}
+
+  /* let colors = ["red", "blue", "black", "orange", "yellow", "green"]; */
+
+#one {
+  background-color: red;
+}
+
+#two {
+  background-color: blue;
+}
+
+#three {
+  background-color: black;
+}
+
+#four {
+  background-color: orange;
+}
+
+#five {
+  background-color: yellow;
+}
+
+#six {
+  background-color: green;
+}
