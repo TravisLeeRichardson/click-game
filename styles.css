@@ -1,5 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 * {
   text-align: center;
+  font-family: 'roboto', serif;
+}
+
+#resetScore {
+  width: 100px;
+  padding: 15px 35px;
+  border-radius: 25px;
+  border: 1.75px solid black;
+  color: red;
+  background-color: white;
+  font-weight: 400;
+}
+
+#resetScore:hover {
+  color: white;
+  background-color: red;
+  border: none;
+}
+
+#startGame {
+  position: absolute;
+  margin-top: 360px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 100px;
+  padding: 15px 35px;
+  border-radius: 25px;
+  border: 1.75px solid black;
+  color: blue;
+  background-color: white;
+  font-weight: 400;
+}
+
+#startGame:hover {
+  color: white;
+  background-color: blue;
+  border: none;
 }
 
 #flexbox {
@@ -9,6 +50,9 @@
   flex-wrap: wrap;
   margin: 0 auto;
   margin-top: 40px;
+  border: 2px solid black;
+  align-items: center;
+  background-color: black;
 }
 
 #flexbox div {
@@ -29,7 +73,7 @@
 }
 
 #three {
-  background-color: black;
+  background-color: white;
 }
 
 #four {

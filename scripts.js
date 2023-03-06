@@ -1,65 +1,78 @@
-let buttons = document.getElementsByTagName("div");
-let points = document.getElementById("points");
-let resetScore = document.getElementById("resetScore");
-let result = document.getElementById("result");
-let startGame = document.getElementById("startGame");
+const buttons = document.querySelectorAll(".bubble");
+const points = document.getElementById("points");
+const resetScore = document.getElementById("resetScore");
+const result = document.getElementById("result");
+const startGame = document.getElementById("startGame");
+const timer = document.getElementById("timer")
 
 let timeLimit = 10000;
 
+const shuffleColors = () => {
+  const colors = ["red", "blue", "white", "orange", "yellow", "green"];
+  const currentIndex = colors.length;
+  return colors.reduce((acc, _, i) => {
+    const randomIndex = Math.floor(Math.random() * (currentIndex - i)) + i;
+    [acc[i], acc[randomIndex]] = [acc[randomIndex], acc[i]];
+    return acc;
+  }, colors.slice());
+}
+
 const endGame = () => {
-  Array.from(buttons).forEach((button) => {
+  startGame.style.visibility = "visible";
+  buttons.forEach(button => {
     button.removeEventListener("click", handleClick);
     button.style.backgroundColor = "black";
   });
-}
-
-const shuffleColors = () => {
-  let colors = ["red", "blue", "black", "orange", "yellow", "green"];
-  let currentIndex = colors.length,
-    randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    [colors[currentIndex], colors[randomIndex]] = [
-      colors[randomIndex],
-      colors[currentIndex],
-    ];
-  }
-  return colors;
-}
+  clearTimeout(timeoutId);
+  timer.textContent = "";
+};
 
 
 const resetScoreFunction = () => {
-  points.textContent = 0;
+  points.textContent = "0 points";
   endGame();
 }
-resetScore.addEventListener("click", resetScoreFunction);
 
-function handleClick() {
-  let style = window.getComputedStyle(this);
-  let color = style.backgroundColor;
-  if (color === "rgb(0, 0, 0)") {
+const handleClick = (event) => {
+  const bubbleColor = window.getComputedStyle(event.target).backgroundColor;
+  if (bubbleColor === "rgb(255, 255, 255)") {
     let currentPoints = parseInt(points.textContent);
-    points.textContent = currentPoints + 1;
+    let newPoints = currentPoints + 1;
+    points.textContent = `${newPoints} points`;
   }
-  let colors = shuffleColors();
-  Array.from(buttons).forEach((button, i) => {
-    button.style.backgroundColor = colors[i];
-  });
+  const shuffledColors = shuffleColors();
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].style.backgroundColor = shuffledColors[i];
+  };
 }
 
 const startGameFunction = () => {
-  points.textContent = 0;
-  let colors = shuffleColors();
-  Array.from(buttons).forEach((button, i) => {
-    button.style.backgroundColor = colors[i];
-    button.addEventListener("click", handleClick);
-  });
+  startGame.style.visibility = "hidden";
+  points.textContent = "0 points";
+  const shuffledColors = shuffleColors();
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].style.backgroundColor = shuffledColors[i];
+    buttons[i].addEventListener("click", handleClick);
+  };
 
-  setTimeout(() => {
-    endGame();
-  }, timeLimit);
-}
+  let remainingTime = timeLimit;
+  timeoutId = setTimeout(endGame, timeLimit);
+  const intervalId = setInterval(() => {
+    remainingTime -= 10;
+    const seconds = Math.floor(remainingTime / 1000);
+    const milliseconds = (remainingTime % 1000)
+      .toString()
+      .padStart(3, "0")
+      .slice(0, 2);
+    timer.textContent = `${seconds}.${milliseconds} seconds`;
+    if (remainingTime <= 0) {
+      clearInterval(intervalId);
+      endGame();
+    }
+  }, 10);
+};
+
+
+resetScore.addEventListener("click", resetScoreFunction);
 startGame.addEventListener("click", startGameFunction)
 
